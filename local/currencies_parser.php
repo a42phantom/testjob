@@ -27,10 +27,16 @@ $arCurrencies = array();
 for ($startDay = 29; $startDay >= 0; $startDay--) {
 	$date = new DateTime('-' . $startDay . ' days');
 	$date = $date->format('Y-m-d');
-	$test = file_get_contents(DB_URL . '/' . $date);
-	$result = json_decode($test);
 	
-	var_dump($result);
+	$url = DB_URL . '/' . $date;
+	$curl = curl_init();
+	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($curl, CURLOPT_URL, $url);
+	$res = curl_exec($curl);
+	//$test = file_get_contents(DB_URL . '/' . $date);
+	curl_close($curl);
+	
+	$result = json_decode($res);
 	
 	foreach ($result->rates as $key => $currenci) {
 		$arCurrencies[$key]['ITEMS'][$date] = $currenci;
