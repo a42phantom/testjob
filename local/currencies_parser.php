@@ -30,6 +30,8 @@ for ($startDay = 29; $startDay >= 0; $startDay--) {
 	$test = file_get_contents(DB_URL . '/' . $date);
 	$result = json_decode($test);
 	
+	var_dump($result);
+	
 	foreach ($result->rates as $key => $currenci) {
 		$arCurrencies[$key]['ITEMS'][$date] = $currenci;
 	}
